@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:softbenz_task/features/product_detail/entity/product_detail_entity.dart';
 
 abstract class ProductDetailState extends Equatable {}
 
@@ -25,13 +26,14 @@ class ProductDetailErrorState extends ProductDetailState {
   List<String> get props => [message];
 }
 
-class ProductDetailSuccessState<Type> extends ProductDetailState {
-  final Type data;
+class ProductDetailSuccessState<ProductDetailEntity>
+    extends ProductDetailState {
+  final ProductDetailEntity product;
 
-  ProductDetailSuccessState({required this.data});
+  ProductDetailSuccessState({required this.product});
 
   @override
-  List<Type?> get props => [data];
+  List<ProductDetailEntity?> get props => [product];
 }
 
 class ProductDetailNoDataState extends ProductDetailState {

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:softbenz_task/core/injector/injection.dart';
 import 'package:softbenz_task/core/wrappers/bloc_wrapper.dart';
 import 'package:softbenz_task/core/wrappers/repository_wrapper.dart';
 import 'package:softbenz_task/features/product_detail/page/product_detail_view.dart';
+import 'package:softbenz_task/features/product_detail/widget/product_detail_body.dart';
 
-void main() {
+void main() async {
+  await DI.init();
+
   runApp(const MyApp());
 }
 
