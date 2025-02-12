@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     return RepositoryWrapper(
       child: BlocWrapper(
         child: MaterialApp(
-          title: 'Flutter Demo',
+          title: 'SoftBenz',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
