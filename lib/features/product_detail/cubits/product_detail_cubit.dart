@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:softbenz_task/features/product_detail/cubits/product_detail_state.dart';
-import 'package:softbenz_task/features/product_detail/entity/color_variant_entity.dart';
 import 'package:softbenz_task/features/product_detail/repository/product_detail_repository.dart';
 
 class ProductDetailCubit extends Cubit<ProductDetailState> {
@@ -15,15 +14,5 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
       (err) => emit(ProductDetailErrorState(message: err)),
       (data) => emit(ProductDetailSuccessState(product: data)),
     );
-  }
-
-  setColorVarient(String id, List<ColorVariantEntity> colorVarient) {
-    if (state is ProductDetailSuccessState) {
-      for (ColorVariantEntity item in colorVarient) {
-        if (item.id == id) {
-          item.isSelected = true;
-        }
-      }
-    }
   }
 }

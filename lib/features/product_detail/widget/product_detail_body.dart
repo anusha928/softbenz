@@ -3,10 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:softbenz_task/core/services/notification_service.dart';
 import 'package:softbenz_task/core/utils/size_utils.dart';
 import 'package:softbenz_task/core/utils/text_utils.dart';
+import 'package:softbenz_task/core/widgets/appbar.dart';
 import 'package:softbenz_task/core/widgets/buttons/custom_filled_button.dart';
 import 'package:softbenz_task/core/widgets/expandaable_widget.dart';
 import 'package:softbenz_task/core/widgets/price_widget.dart';
 import 'package:softbenz_task/core/widgets/product_color_varient_widget.dart';
+import 'package:softbenz_task/features/product_detail/cubits/color_varient_cubit.dart';
+import 'package:softbenz_task/features/product_detail/cubits/counter_cubit.dart';
 import 'package:softbenz_task/features/product_detail/cubits/product_detail_cubit.dart';
 import 'package:softbenz_task/features/product_detail/cubits/product_detail_state.dart';
 import 'package:softbenz_task/features/product_detail/entity/product_detail_entity.dart';
@@ -28,23 +31,28 @@ class ProductDetailBody extends StatefulWidget {
 class _ProductDetailBodyState extends State<ProductDetailBody> {
   bool isWish = false;
   bool isContactSeller = false;
-  ProductDetailEntity? productdetail;
+  ProductDetailEntity? productDetail;
   TextEditingController messageController = TextEditingController();
-    NotificationServices services = NotificationServices();
 
+  NotificationServices services = NotificationServices();
+  late ColorVarientCubit colorVarientCubit;
 
   @override
   void initState() {
-    final productdetail =
-        context.read<ProductDetailCubit>().fetchProductDetail();
-    if (productdetail is ProductDetailSuccessState) {
-      isWish = productdetail.product.wished;
+    final cubit = context.read<ProductDetailCubit>();
+    cubit.fetchProductDetail();
+
+    if (cubit.state is ProductDetailSuccessState) {
+      productDetail = (cubit.state as ProductDetailSuccessState).product;
+      isWish = productDetail!.wished;
     }
-     services.requestNotificationPermission();
+
+    colorVarientCubit = ColorVarientCubit(
+      productDetail?.colorVariants.first.id ?? "",
+    );
+    services.requestNotificationPermission();
     services.notificationInit();
-    services.getDeviceToken().then((value) {
-      print(value);
-    });
+    services.getDeviceToken().then((value) {});
     super.initState();
   }
 
@@ -56,22 +64,7 @@ class _ProductDetailBodyState extends State<ProductDetailBody> {
       },
       child: Scaffold(
         backgroundColor: ColorName.colorWhite,
-        appBar: AppBar(
-          leading: Icon(Icons.menu),
-          title: BuildText(
-            text: "Product Detail",
-            fontSize: 20.hp,
-            weight: FontWeight.w600,
-            family: FontFamily.barlowSemiBold,
-            color: ColorName.colorBlack,
-          ),
-          backgroundColor: ColorName.colorWhite,
-          toolbarHeight: 70.hp,
-          elevation: 0.8,
-          scrolledUnderElevation: 0,
-          shadowColor: ColorName.colorBackground,
-          surfaceTintColor: ColorName.colorWhite,
-        ),
+        appBar: BuildAppBar(),
         body: BlocBuilder<ProductDetailCubit, ProductDetailState>(
           builder: (context, state) {
             if (state is ProductDetailLoadingState) {
@@ -126,12 +119,22 @@ class _ProductDetailBodyState extends State<ProductDetailBody> {
             SizedBox(
               height: 16.hp,
             ),
-            BuildText(
-              text: "Code: ${product.colorVariants[0].productCode}",
-              fontSize: 16.hp,
-              family: FontFamily.barlowSemiBold,
-              weight: FontWeight.w500,
-              color: ColorName.colorBlack,
+            BlocBuilder<ColorVarientCubit, String>(
+              bloc: colorVarientCubit,
+              builder: (context, selectedVariantId) {
+                final selectedVariant = product.colorVariants.firstWhere(
+                  (item) => item.id == selectedVariantId,
+                  orElse: () => product.colorVariants.first,
+                );
+
+                return BuildText(
+                  text: "Code: ${selectedVariant.productCode}",
+                  fontSize: 16.hp,
+                  family: FontFamily.barlowSemiBold,
+                  weight: FontWeight.w500,
+                  color: ColorName.colorBlack,
+                );
+              },
             ),
             RatingsWidget(rating: product.ratings),
             SizedBox(
@@ -145,13 +148,20 @@ class _ProductDetailBodyState extends State<ProductDetailBody> {
             SizedBox(
               height: 10.hp,
             ),
-            ProductColorVarient(
-              colorVarient: product.colorVariants,
+            BlocProvider(
+              create: (context) =>
+                  ColorVarientCubit(product.colorVariants.first.id!),
+              child: ProductColorVarient(
+                colorVarient: product.colorVariants,
+              ),
             ),
             SizedBox(
               height: 10.hp,
             ),
-            ProductAddToCart(),
+            BlocProvider(
+              create: (context) => CounterCubit(),
+              child: ProductAddToCart(),
+            ),
             SizedBox(
               height: 10.hp,
             ),

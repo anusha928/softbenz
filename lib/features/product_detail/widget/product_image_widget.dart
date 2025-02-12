@@ -13,7 +13,7 @@ class ProductImageWidget extends StatelessWidget {
       children: [
         CarouselSlider(
             options: CarouselOptions(
-              autoPlay: false,
+              autoPlay: true,
               height: 40.h,
               aspectRatio: 1.2,
               enlargeCenterPage: true,

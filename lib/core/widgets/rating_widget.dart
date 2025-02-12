@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:softbenz_task/core/utils/size_utils.dart';
 import 'package:softbenz_task/core/utils/text_utils.dart';
-import 'package:softbenz_task/core/widgets/buttons/custom_filled_button.dart';
 import 'package:softbenz_task/gen/colors.gen.dart';
 import 'package:softbenz_task/gen/fonts.gen.dart';
 
