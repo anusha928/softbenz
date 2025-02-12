@@ -23,8 +23,12 @@ class $AssetsImagesGen {
   AssetGenImage get favourite =>
       const AssetGenImage('assets/images/favourite.png');
 
+  /// File path: assets/images/favourite_filled.png
+  AssetGenImage get favouriteFilled =>
+      const AssetGenImage('assets/images/favourite_filled.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [fallback, favourite];
+  List<AssetGenImage> get values => [fallback, favourite, favouriteFilled];
 }
 
 class $AssetsSvgGen {

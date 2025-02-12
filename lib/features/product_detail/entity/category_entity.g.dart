@@ -11,7 +11,7 @@ CategoryEntity _$CategoryEntityFromJson(Map<String, dynamic> json) =>
       id: json['_id'] as String? ?? '',
       slug: json['slug'] as String? ?? '',
       title: json['title'] as String? ?? '',
-      level: json['level'] as String? ?? '',
+      level: (json['level'] as num?)?.toInt() ?? 0,
       parentId: json['parentId'] as String? ?? '',
     );
 

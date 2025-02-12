@@ -14,8 +14,8 @@ class CategoryEntity {
 
   @JsonKey(name: 'title', defaultValue: "", includeIfNull: true)
   final String? title;
-  @JsonKey(name: 'level', defaultValue: "", includeIfNull: true)
-  final String? level;
+  @JsonKey(name: 'level', defaultValue: 0, includeIfNull: true)
+  final int? level;
 
   @JsonKey(name: 'parentId', defaultValue: "", includeIfNull: true)
   final String? parentId;

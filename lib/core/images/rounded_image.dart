@@ -10,14 +10,14 @@ class CustomRoundedImage extends StatelessWidget {
   final VoidCallback? onPressed;
   final BoxFit fit;
   const CustomRoundedImage({
-    Key? key,
+    super.key,
     required this.url,
     required this.height,
     required this.width,
     required this.fit,
     this.customPlaceHolder,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

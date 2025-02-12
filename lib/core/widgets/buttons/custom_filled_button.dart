@@ -21,6 +21,7 @@ class CustomFilledButton extends StatelessWidget {
   final String fontFamily;
   final Color fontColor;
   final Color buttonColor;
+  final Color borderColor;
 
   const CustomFilledButton({
     super.key,
@@ -37,6 +38,7 @@ class CustomFilledButton extends StatelessWidget {
     this.showShadow = true,
     this.disabled = false,
     this.buttonColor = ColorName.colorPrimary,
+    this.borderColor = ColorName.colorWhite,
     required this.fontColor,
     required this.fontFamily,
     required this.fontSize,
@@ -52,7 +54,9 @@ class CustomFilledButton extends StatelessWidget {
         padding: containerPadding ??
             EdgeInsets.symmetric(vertical: 8.hp, horizontal: 12.wp),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6), color: buttonColor),
+            borderRadius: BorderRadius.circular(6),
+            color: buttonColor,
+            border: Border.all(color: borderColor, width: 2)),
         alignment: Alignment.center,
         child: Row(
           mainAxisSize: MainAxisSize.min,

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "80092329722",
+    "project_id": "push-notification-softbenz",
+    "storage_bucket": "push-notification-softbenz.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80092329722:android:81b13162df25933db77b43",
+        "android_client_info": {
+          "package_name": "com.example.softbenz_task"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyzzBe4hyeDvEmBqrnWWWKwHFHF3rcblQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

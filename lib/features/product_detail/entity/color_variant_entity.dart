@@ -5,19 +5,19 @@ part 'color_variant_entity.g.dart';
 
 @JsonSerializable()
 class ColorVariantEntity {
-  ColorVariantEntity({
-    this.color,
-    this.price,
-    this.rewardPoint,
-    this.strikePrice,
-    this.offPercent,
-    this.minOrder,
-    this.maxOrder,
-    this.status,
-    this.images,
-    this.productCode,
-    this.id,
-  });
+  ColorVariantEntity(
+      {this.color,
+      this.price,
+      this.rewardPoint,
+      this.strikePrice,
+      this.offPercent,
+      this.minOrder,
+      this.maxOrder,
+      this.status,
+      this.images,
+      this.productCode,
+      this.id,
+      this.isSelected});
 
   @JsonKey(name: 'color', includeIfNull: true)
   final ColorAttributeEntity? color;
@@ -51,6 +51,13 @@ class ColorVariantEntity {
 
   @JsonKey(name: '_id', defaultValue: "", includeIfNull: true)
   final String? id;
+
+  @JsonKey(
+      name: 'isSelected',
+      defaultValue: false,
+      includeFromJson: false,
+      includeIfNull: true)
+  bool? isSelected;
 
   factory ColorVariantEntity.fromJson(Map<String, dynamic> json) =>
       _$ColorVariantEntityFromJson(json);

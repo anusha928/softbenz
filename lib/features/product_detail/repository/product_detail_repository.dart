@@ -14,7 +14,7 @@ class ProductDetailRepository {
       final res = await apiProvider.get(EndPointConst.productDetailApi);
       ProductDetailEntity productDetail =
           ProductDetailEntity.fromJson(res["data"]["data"]);
-
+      productDetail.colorVariants[0].isSelected = true;
       return Right(productDetail);
     } on Failure catch (e) {
       return Left(e.message);

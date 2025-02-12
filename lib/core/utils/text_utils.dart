@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:softbenz_task/core/utils/size_utils.dart';
 import 'package:softbenz_task/gen/colors.gen.dart';
 
 extension Capitalize on String {
@@ -21,7 +22,7 @@ extension Capitalize on String {
 
 class BuildText extends StatelessWidget {
   const BuildText(
-      {Key? key,
+      {super.key,
       this.text = "",
       this.fontSize,
       this.color = ColorName.colorLighterGrey,
@@ -32,8 +33,7 @@ class BuildText extends StatelessWidget {
       this.textAlign = TextAlign.start,
       this.maxLines,
       this.overflow,
-      this.italics = false})
-      : super(key: key);
+      this.italics = false});
 
   final String text;
   final double? fontSize;
@@ -65,4 +65,30 @@ class BuildText extends StatelessWidget {
       ),
     );
   }
+}
+
+customTextField(TextEditingController controller) {
+  return TextFormField(
+    controller: controller,
+    decoration: InputDecoration(
+      hintText: "Type your message...",
+      hintStyle: TextStyle(color: ColorName.colorHintText),
+      filled: true,
+      fillColor: ColorName.colorWhite,
+      contentPadding: EdgeInsets.symmetric(vertical: 12.hp, horizontal: 16.wp),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: ColorName.colorBackground),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: ColorName.colorPrimary, width: 1),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: ColorName.colorBackground),
+      ),
+    ),
+    maxLines: 3,
+  );
 }

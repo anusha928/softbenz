@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:softbenz_task/features/product_detail/entity/product_detail_entity.dart';
 
 abstract class ProductDetailState extends Equatable {}
 
@@ -41,4 +40,11 @@ class ProductDetailNoDataState extends ProductDetailState {
 
   @override
   List<Object?> get props => [];
+}
+
+class ProductColorVarientState extends ProductDetailState {
+  final String id;
+  ProductColorVarientState({required this.id});
+  @override
+  List<String?> get props => [id];
 }

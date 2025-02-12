@@ -8,10 +8,14 @@ part of 'product_detail_entity.dart';
 
 ProductDetailEntity _$ProductDetailEntityFromJson(Map<String, dynamic> json) =>
     ProductDetailEntity(
-      id: json['id'] as String? ?? '',
+      id: json['_id'] as String? ?? '',
       slug: json['slug'] as String? ?? '',
-      category: json['category'] as Map<String, dynamic>? ?? {},
-      brand: json['brand'] as Map<String, dynamic>? ?? {},
+      category: json['category'] == null
+          ? null
+          : CategoryEntity.fromJson(json['category'] as Map<String, dynamic>),
+      brand: json['brand'] == null
+          ? null
+          : BrandEntity.fromJson(json['brand'] as Map<String, dynamic>),
       title: json['title'] as String? ?? '',
       ingredient: json['ingredient'] as String? ?? '',
       howToUse: json['howToUse'] as String? ?? '',
@@ -34,12 +38,14 @@ ProductDetailEntity _$ProductDetailEntityFromJson(Map<String, dynamic> json) =>
               .toList() ??
           [],
       sizeAttributes: (json['sizeAttributes'] as List<dynamic>?)
-              ?.map((e) => e as Map<String, dynamic>)
+              ?.map((e) =>
+                  ColorAttributeEntity.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       variantType: json['variantType'] as String? ?? '',
       colorVariants: (json['colorVariants'] as List<dynamic>?)
-              ?.map((e) => e as Map<String, dynamic>)
+              ?.map(
+                  (e) => ColorVariantEntity.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       ratings: (json['ratings'] as num?)?.toInt() ?? 0,
@@ -69,7 +75,7 @@ ProductDetailEntity _$ProductDetailEntityFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ProductDetailEntityToJson(
         ProductDetailEntity instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'slug': instance.slug,
       'category': instance.category,
       'brand': instance.brand,

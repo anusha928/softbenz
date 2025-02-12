@@ -1,25 +1,29 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:softbenz_task/features/product_detail/entity/brand_entity.dart';
+import 'package:softbenz_task/features/product_detail/entity/category_entity.dart';
+import 'package:softbenz_task/features/product_detail/entity/color_attribute_entity.dart';
+import 'package:softbenz_task/features/product_detail/entity/color_variant_entity.dart';
 part 'product_detail_entity.g.dart';
 
 @JsonSerializable()
 class ProductDetailEntity {
-  @JsonKey(name: "id", defaultValue: "", includeIfNull: true)
+  @JsonKey(name: "_id", defaultValue: "", includeIfNull: true)
   final String id;
 
   @JsonKey(name: "slug", defaultValue: "", includeIfNull: true)
   final String slug;
 
-  @JsonKey(name: "category", defaultValue: {}, includeIfNull: true)
-  final Map<String, dynamic> category;
+  @JsonKey(name: "category", includeIfNull: true)
+  final CategoryEntity? category;
 
-  @JsonKey(name: "brand", defaultValue: {}, includeIfNull: true)
-  final Map<String, dynamic> brand;
+  @JsonKey(name: "brand", includeIfNull: true)
+  final BrandEntity? brand;
 
   @JsonKey(name: "title", defaultValue: "", includeIfNull: true)
-  final String title;
+  final String? title;
 
   @JsonKey(name: "ingredient", defaultValue: "", includeIfNull: true)
-  final String ingredient;
+  final String? ingredient;
 
   @JsonKey(name: "howToUse", defaultValue: "", includeIfNull: true)
   final String howToUse;
@@ -58,13 +62,13 @@ class ProductDetailEntity {
   final List<Map<String, dynamic>> colorAttributes;
 
   @JsonKey(name: "sizeAttributes", defaultValue: [], includeIfNull: true)
-  final List<Map<String, dynamic>> sizeAttributes;
+  final List<ColorAttributeEntity> sizeAttributes;
 
   @JsonKey(name: "variantType", defaultValue: "", includeIfNull: true)
   final String variantType;
 
   @JsonKey(name: "colorVariants", defaultValue: [], includeIfNull: true)
-  final List<Map<String, dynamic>> colorVariants;
+  final List<ColorVariantEntity> colorVariants;
 
   @JsonKey(name: "ratings", defaultValue: 0, includeIfNull: true)
   final int ratings;
