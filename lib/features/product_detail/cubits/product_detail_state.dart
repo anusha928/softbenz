@@ -41,10 +41,3 @@ class ProductDetailNoDataState extends ProductDetailState {
   @override
   List<Object?> get props => [];
 }
-
-class ProductColorVarientState extends ProductDetailState {
-  final String id;
-  ProductColorVarientState({required this.id});
-  @override
-  List<String?> get props => [id];
-}

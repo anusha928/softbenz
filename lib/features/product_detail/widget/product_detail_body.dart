@@ -8,7 +8,6 @@ import 'package:softbenz_task/core/widgets/buttons/custom_filled_button.dart';
 import 'package:softbenz_task/core/widgets/expandaable_widget.dart';
 import 'package:softbenz_task/core/widgets/price_widget.dart';
 import 'package:softbenz_task/core/widgets/product_color_varient_widget.dart';
-import 'package:softbenz_task/features/product_detail/cubits/color_varient_cubit.dart';
 import 'package:softbenz_task/features/product_detail/cubits/counter_cubit.dart';
 import 'package:softbenz_task/features/product_detail/cubits/product_detail_cubit.dart';
 import 'package:softbenz_task/features/product_detail/cubits/product_detail_state.dart';
@@ -35,7 +34,6 @@ class _ProductDetailBodyState extends State<ProductDetailBody> {
   TextEditingController messageController = TextEditingController();
 
   NotificationServices services = NotificationServices();
-  late ColorVarientCubit colorVarientCubit;
 
   @override
   void initState() {
@@ -47,9 +45,6 @@ class _ProductDetailBodyState extends State<ProductDetailBody> {
       isWish = productDetail!.wished;
     }
 
-    colorVarientCubit = ColorVarientCubit(
-      productDetail?.colorVariants.first.id ?? "",
-    );
     services.requestNotificationPermission();
     services.notificationInit();
     services.getDeviceToken().then((value) {});
@@ -79,7 +74,8 @@ class _ProductDetailBodyState extends State<ProductDetailBody> {
               );
             }
             if (state is ProductDetailSuccessState) {
-              return _createProductDetailBody(state.product);
+              productDetail = state.product;
+              return _createProductDetailBody(productDetail!);
             }
             return SizedBox.shrink();
           },
@@ -119,22 +115,13 @@ class _ProductDetailBodyState extends State<ProductDetailBody> {
             SizedBox(
               height: 16.hp,
             ),
-            BlocBuilder<ColorVarientCubit, String>(
-              bloc: colorVarientCubit,
-              builder: (context, selectedVariantId) {
-                final selectedVariant = product.colorVariants.firstWhere(
-                  (item) => item.id == selectedVariantId,
-                  orElse: () => product.colorVariants.first,
-                );
-
-                return BuildText(
-                  text: "Code: ${selectedVariant.productCode}",
-                  fontSize: 16.hp,
-                  family: FontFamily.barlowSemiBold,
-                  weight: FontWeight.w500,
-                  color: ColorName.colorBlack,
-                );
-              },
+            BuildText(
+              text:
+                  "Code: ${product.colorVariants.firstWhere((e) => e.isSelected, orElse: () => product.colorVariants[0]).productCode}",
+              fontSize: 16.hp,
+              family: FontFamily.barlowSemiBold,
+              weight: FontWeight.w500,
+              color: ColorName.colorBlack,
             ),
             RatingsWidget(rating: product.ratings),
             SizedBox(
@@ -148,12 +135,12 @@ class _ProductDetailBodyState extends State<ProductDetailBody> {
             SizedBox(
               height: 10.hp,
             ),
-            BlocProvider(
-              create: (context) =>
-                  ColorVarientCubit(product.colorVariants.first.id!),
-              child: ProductColorVarient(
-                colorVarient: product.colorVariants,
-              ),
+            ProductColorVarient(
+              colorVariants: product.colorVariants,
+              onTap: (value) {
+                 context.read<ProductDetailCubit>().fetchProductDetail(
+                    varientId: product.colorVariants[value].id!);
+              },
             ),
             SizedBox(
               height: 10.hp,

@@ -17,7 +17,7 @@ class ColorVariantEntity {
       this.images,
       this.productCode,
       this.id,
-      this.isSelected});
+      this.isSelected = false});
 
   @JsonKey(name: 'color', includeIfNull: true)
   final ColorAttributeEntity? color;
@@ -57,7 +57,7 @@ class ColorVariantEntity {
       defaultValue: false,
       includeFromJson: false,
       includeIfNull: true)
-  bool? isSelected;
+  bool isSelected;
 
   factory ColorVariantEntity.fromJson(Map<String, dynamic> json) =>
       _$ColorVariantEntityFromJson(json);
